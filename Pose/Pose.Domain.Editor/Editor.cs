@@ -152,7 +152,7 @@ namespace Pose.Domain.Editor
             if (!CurrentDocument.HasFilename)
                 throw new Exception("No filepath set for document yet.");
 
-            ProtobufSaver.SaveDocument(CurrentDocument);
+            //ProtobufSaver.SaveDocument(CurrentDocument);
             ExportSceneSpritesheet();
             CurrentDocument.MarkSaved();
             _messageBus.Publish(new CurrentDocumentSaved());

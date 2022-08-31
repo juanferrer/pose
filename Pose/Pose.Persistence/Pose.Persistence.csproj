@@ -5,11 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.Protobuf" Version="3.14.0" />
-    <PackageReference Include="Google.Protobuf.Tools" Version="3.14.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Pose.Domain\Pose.Domain.csproj" />
   </ItemGroup>
 

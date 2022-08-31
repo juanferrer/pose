@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Extensions.JSON;
 using Pose.Persistence.Editor;
 using Pose.SpritePacker;
 using SkiaSharp;
@@ -59,7 +60,7 @@ namespace Pose.Spritesheets
                 });
             }
 
-            ProtobufSaver.Save(protoSpritesheet, filename);
+            DocumentSaver.Save(protoSpritesheet.Serialize(), filename);
         }
     }
 }
