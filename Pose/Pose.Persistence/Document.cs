@@ -10,11 +10,23 @@ namespace Pose.Persistence
         public DrawOrder DrawOrder { get; set; }
         public List<Node> Nodes { get; set; }
         public List<Animation> Animations { get; set; }
+
+        public Document()
+        {
+            DrawOrder = new DrawOrder();
+            Nodes = new List<Node>();
+            Animations = new List<Animation>();
+        }
     }
 
     public class DrawOrder
     {
         public List<ulong> NodeIds { get; set; }
+
+        public DrawOrder()
+        {
+            NodeIds = new List<ulong>();
+        }
     }
 
     public class Node
@@ -28,6 +40,11 @@ namespace Pose.Persistence
         public string SpriteKey { get; set; }
         public float BoneLength { get; set; }
         public bool IsVisible { get; set; }
+
+        public Node()
+        {
+            Position = new Point();
+        }
     }
 
     public class Point
@@ -45,12 +62,22 @@ namespace Pose.Persistence
         public uint FramesPerSecond { get; set; }
         public bool IsLoop { get; set; }
         public List<NodeAnimation> NodeAnimations { get; set; }
+
+        public Animation ()
+        {
+            NodeAnimations = new List<NodeAnimation> ();
+        }
     }
 
     public class NodeAnimation
     {
         public ulong NodeId { get; set; }
         public List<PropertyAnimation> PropertyAnimations { get; set; }
+
+        public NodeAnimation()
+        {
+            PropertyAnimations = new List<PropertyAnimation> ();
+        }
     }
 
     public class PropertyAnimation
@@ -59,6 +86,11 @@ namespace Pose.Persistence
         public uint Property { get; set; }
         public uint Vertex { get; set; }
         public List<Key> Keys { get; set; }
+
+        public PropertyAnimation()
+        {
+            Keys = new List<Key> ();
+        }
     }
 
     public class Key
@@ -68,6 +100,11 @@ namespace Pose.Persistence
         public float Value { get; set; }
         public InterpolationType InterpolationType { get; set; }
         public BezierCurve Curve { get; set; }
+
+        public Key()
+        {
+            Curve = new BezierCurve ();
+        }
     }
 
     public class BezierCurve
@@ -76,6 +113,14 @@ namespace Pose.Persistence
         public Point P1 { get; set; }
         public Point P2 { get; set; }
         public Point P3 { get; set; }
+
+        public BezierCurve()
+        {
+            P0 = new Point();
+            P1 = new Point();
+            P2 = new Point();
+            P3 = new Point();
+        }
     }
 
     #region Enums

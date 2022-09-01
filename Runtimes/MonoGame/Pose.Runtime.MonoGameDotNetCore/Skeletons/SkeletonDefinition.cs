@@ -269,7 +269,8 @@ namespace Pose.Runtime.MonoGameDotNetCore.Skeletons
 
             var texture = Texture2D.FromFile(graphicsDevice, pngFilename);
             //var sheet = SpritesheetMapper.MapSpritesheet(Persistence.Spritesheet.Parser.ParseFrom(File.ReadAllBytes(sheetFilename)));
-            var sheet = File.ReadAllText(sheetFilename).Deserialize<Spritesheet>();
+            var sheet = SpritesheetMapper.MapSpritesheet(File.ReadAllText(sheetFilename).Deserialize<Persistence.Spritesheet>());
+
 
             return new SkeletonDefinition(document, sheet, texture);
         }

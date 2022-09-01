@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Extensions\Extensions\Extensions.csproj" />
     <ProjectReference Include="..\..\..\Pose\Pose.Persistence\Pose.Persistence.csproj" />
+    <ProjectReference Include="..\..\..\Pose\Pose.SpritePacker\Pose.SpritePacker.csproj" />
   </ItemGroup>
 
 </Project>

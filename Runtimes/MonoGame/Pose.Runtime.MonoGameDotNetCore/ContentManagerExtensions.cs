@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Extensions.JSON;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Pose.Persistence;
@@ -37,23 +38,23 @@ namespace Pose.Runtime.MonoGameDotNetCore
         /// </summary>
         public static Document LoadPoseDocument(this ContentManager content, string filename)
         {
-            var data = GetContentFileData(content, filename);
-            return Document.Parser.ParseFrom(data);
+            var data = GetFileContents(content, filename);
+            return data.Deserialize<Document>();
         }
 
         public static Rendering.Spritesheet LoadSpritesheet(this ContentManager content, string filename)
         {
-            var data = GetContentFileData(content, filename);
-            var spritesheet = Spritesheet.Parser.ParseFrom(data);
+            var data = GetFileContents(content, filename);
+            var spritesheet = data.Deserialize<Spritesheet>();
             return SpritesheetMapper.MapSpritesheet(spritesheet);
         }
 
-        private static byte[] GetContentFileData(ContentManager content, string filename)
+        private static string GetFileContents(ContentManager content, string filename)
         {
             var fullPath = Path.Combine(Path.GetFullPath(content.RootDirectory), filename);
             if (!File.Exists(fullPath))
                 throw new FileNotFoundException($"Content file not found: \"{fullPath}\".");
-            var data = File.ReadAllBytes(fullPath);
+            var data = File.ReadAllText(fullPath);
             return data;
         }
     }

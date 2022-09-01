@@ -45,7 +45,8 @@ namespace Pose.Spritesheets
             var protoSpritesheet = new Persistence.Spritesheet
             {
                 Width = (uint) spritesheet.Width,
-                Height = (uint) spritesheet.Height
+                Height = (uint) spritesheet.Height,
+                Sprites = new List<Persistence.Sprite>()
             };
             foreach (var sprite in spritesheet.Sprites)
             {
