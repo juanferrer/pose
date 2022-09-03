@@ -31,12 +31,17 @@ namespace Pose.Runtime.MonoGameDotNetCore.Skeletons
         
         public Skeleton CreateInstance(Vector2 position, float depth, float angle)
         {
+            return CreateInstance(position, depth, angle, Texture);
+        }
+
+        public Skeleton CreateInstance(Vector2 position, float depth, float angle, Texture2D texture)
+        {
             // TODO we could optimize by mapping a Document into a form more prepped for creating instances.
             var nodes = BuildRuntimeNodes(out var nodeIndices);
             var drawSequenceIndices = _document.DrawOrder.NodeIds.Select(id => nodeIndices[id]).Reverse().ToArray();
             var animations = BuildRuntimeAnimations(nodeIndices);
 
-            return new Skeleton(nodes, drawSequenceIndices, animations, Texture)
+            return new Skeleton(nodes, drawSequenceIndices, animations, texture)
             {
                 Position = position,
                 Depth = depth,
@@ -237,16 +242,13 @@ namespace Pose.Runtime.MonoGameDotNetCore.Skeletons
 
         public static SkeletonDefinition LoadFromFiles(GraphicsDevice graphicsDevice, string poseFilename, string sheetFilename, string pngFilename, List<string> extraAnimationsFilenames)
         {
-            //var document = Document.Parser.ParseFrom(File.ReadAllBytes(poseFilename));
             var document = File.ReadAllText(poseFilename).Deserialize<Document>();
             var texture = Texture2D.FromFile(graphicsDevice, pngFilename);
-            //var sheet = SpritesheetMapper.MapSpritesheet(Persistence.Spritesheet.Parser.ParseFrom(File.ReadAllBytes(sheetFilename)));
-            var sheet = File.ReadAllText(sheetFilename).Deserialize<Spritesheet>();
+            var sheet = SpritesheetMapper.MapSpritesheet(File.ReadAllText(sheetFilename).Deserialize<Persistence.Spritesheet>());
 
             var extraAnimations = new List<Animation>();
             foreach (var extraAnimationFilename in extraAnimationsFilenames)
             {
-                // TODO: Remove Protobuff dependency and use System.Text.Json instead
                 var extraAnimation = File.ReadAllText(extraAnimationFilename).Deserialize<Animation>();
                 extraAnimations.Add(extraAnimation);
             }

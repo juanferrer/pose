@@ -52,6 +52,7 @@ namespace Pose.Shell
         public static readonly RoutedCommand Exit = new RoutedCommand();
         public static readonly RoutedCommand Cancel = new RoutedCommand();
         public static readonly RoutedCommand ExportSpritesheet = new RoutedCommand();
+        public static readonly RoutedCommand ExportAnimations = new RoutedCommand();
 
         private void SaveExecute(object sender, RoutedEventArgs e)
         {
@@ -106,6 +107,11 @@ namespace Pose.Shell
         private void ExportSpritesheetExecute(object sender, ExecutedRoutedEventArgs e)
         {
             ViewModel.ExportSpritesheet();
+        }
+
+        private void ExportAnimationsExecute(object sender, ExecutedRoutedEventArgs e)
+        {
+            ViewModel.ExportAnimations();
         }
 
         #endregion

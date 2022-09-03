@@ -15,6 +15,7 @@
             <MenuItem Header="Save As..." InputGestureText="Ctrl-Shift-S" Command="SaveAs" Style="{StaticResource PoseSubMenuItemStyle}" />
             <Separator Style="{StaticResource PoseMenuSeparator}" />
             <MenuItem Header="Export spritesheet..." InputGestureText="Ctrl-Alt-Shift-S" Command="local:ShellWindow.ExportSpritesheet" Style="{StaticResource PoseSubMenuItemStyle}" />
+            <MenuItem Header="Export animations..." InputGestureText="Ctrl-Alt-Shift-A" Command="local:ShellWindow.ExportAnimations" Style="{StaticResource PoseSubMenuItemStyle}" />
             <Separator Style="{StaticResource PoseMenuSeparator}" />
             <MenuItem Header="Exit" InputGestureText="Alt-F4" Command="local:ShellWindow.Exit" Style="{StaticResource PoseSubMenuItemStyle}" />
         </MenuItem>
