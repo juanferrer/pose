@@ -18,6 +18,7 @@ using Pose.Panels.ModeSwitching;
 using Pose.Panels.Properties;
 using Pose.Persistence.Editor;
 using Pose.Popups.ExportSpritesheets;
+using Pose.Popups.ExportAnimations;
 using Pose.SceneEditor;
 namespace Pose.Shell
 {
@@ -25,6 +26,8 @@ namespace Pose.Shell
     : ViewModel
     {
         private readonly Func<ExportSpritesheetViewModel> _exportSpritesheetViewModelFactory;
+        private readonly Func<ExportAnimationsViewModel> _exportAnimationsViewModelFactory;
+
         private readonly Editor _editor;
         private string _title;
         private Visibility _autoKeyVisibility;
@@ -43,10 +46,12 @@ namespace Pose.Shell
             Func<ModeSwitchPanelViewModel> modeSwitchPanelViewModelFactory,
             Func<AnimationsPanelViewModel> animationsPanelViewModelFactory,
             Func<ExportSpritesheetViewModel> exportSpritesheetViewModelFactory,
+            Func<ExportAnimationsViewModel> exportAnimationsViewModelFactory,
             SceneEditorViewModel sceneEditorViewModel,
             Editor editor)
         {
             _exportSpritesheetViewModelFactory = exportSpritesheetViewModelFactory;
+            _exportAnimationsViewModelFactory = exportAnimationsViewModelFactory;
             _editor = editor;
 
             Title = $"Pose {Assembly.GetEntryAssembly().GetName().Version}";
@@ -228,6 +233,12 @@ namespace Pose.Shell
         public void ExportSpritesheet()
         {
             var viewModel = _exportSpritesheetViewModelFactory.Invoke();
+            viewModel.ShowModal();
+        }
+
+        public void ExportAnimations()
+        {
+            var viewModel = _exportAnimationsViewModelFactory.Invoke();
             viewModel.ShowModal();
         }
 

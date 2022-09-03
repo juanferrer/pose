@@ -22,6 +22,7 @@
             <CommandBinding Command="Redo" CanExecute="RedoCanExecute" Executed="RedoExecuted" />
 
             <CommandBinding Command="shell:ShellWindow.ExportSpritesheet" Executed="ExportSpritesheetExecute"  />
+            <CommandBinding Command="shell:ShellWindow.ExportAnimations" Executed="ExportAnimationsExecute"  />
 
             <CommandBinding Command="shell:ShellWindow.Exit" Executed="ExitExecute" />
 
@@ -30,6 +31,7 @@
     <controls:ModernWindow.InputBindings>
         <KeyBinding Command="SaveAs" Gesture="CTRL+SHIFT+S" />
         <KeyBinding Command="shell:ShellWindow.ExportSpritesheet" Gesture="CTRL+ALT+SHIFT+S" />
+        <KeyBinding Command="shell:ShellWindow.ExportAnimations" Gesture="CTRL+ALT+SHIFT+A" />
     </controls:ModernWindow.InputBindings>
 
     <DockPanel>

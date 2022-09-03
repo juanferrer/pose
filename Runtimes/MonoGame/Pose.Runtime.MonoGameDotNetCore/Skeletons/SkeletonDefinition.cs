@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Pose.Common.Curves;
 using Pose.Persistence;
 using Pose.Runtime.MonoGameDotNetCore.Animations;
+using Extensions.JSON;
 using BezierCurve = Pose.Common.Curves.BezierCurve;
 using Spritesheet = Pose.Runtime.MonoGameDotNetCore.Rendering.Spritesheet;
 
@@ -30,12 +31,17 @@ namespace Pose.Runtime.MonoGameDotNetCore.Skeletons
         
         public Skeleton CreateInstance(Vector2 position, float depth, float angle)
         {
+            return CreateInstance(position, depth, angle, Texture);
+        }
+
+        public Skeleton CreateInstance(Vector2 position, float depth, float angle, Texture2D texture)
+        {
             // TODO we could optimize by mapping a Document into a form more prepped for creating instances.
             var nodes = BuildRuntimeNodes(out var nodeIndices);
             var drawSequenceIndices = _document.DrawOrder.NodeIds.Select(id => nodeIndices[id]).Reverse().ToArray();
             var animations = BuildRuntimeAnimations(nodeIndices);
 
-            return new Skeleton(nodes, drawSequenceIndices, animations, Texture)
+            return new Skeleton(nodes, drawSequenceIndices, animations, texture)
             {
                 Position = position,
                 Depth = depth,
@@ -177,13 +183,13 @@ namespace Pose.Runtime.MonoGameDotNetCore.Skeletons
             return new BezierCurve(new Common.Vector2(curve.P0.X, curve.P0.Y), new Common.Vector2(curve.P1.X, curve.P1.Y), new Common.Vector2(curve.P2.X, curve.P2.Y), new Common.Vector2(curve.P3.X, curve.P3.Y));
         }
 
-        private static CurveType MapInterpolationType(Key.Types.InterpolationTypeEnum type)
+        private static CurveType MapInterpolationType(InterpolationType type)
         {
             return type switch
             {
-                Key.Types.InterpolationTypeEnum.Linear => CurveType.Linear,
-                Key.Types.InterpolationTypeEnum.Hold => CurveType.Hold,
-                Key.Types.InterpolationTypeEnum.Bezier => CurveType.Bezier,
+                InterpolationType.Linear => CurveType.Linear,
+                InterpolationType.Hold => CurveType.Hold,
+                InterpolationType.Bezier => CurveType.Bezier,
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
         }
@@ -192,7 +198,7 @@ namespace Pose.Runtime.MonoGameDotNetCore.Skeletons
         {
             // we store worldtransform of the Skeleton in the game as an extra runtime rootnode at index 0. This ensures all nodes have a parent node, eliminating an IF at render-time and allows us to give the skeleton a world transform.
 
-            var nodeCount = _document.Nodes.Count(n => n.Type == Node.Types.NodeType.Spritenode) + 1; // +1 -> for the extra runtime root 
+            var nodeCount = _document.Nodes.Count(n => n.Type == NodeType.SpriteNode) + 1; // +1 -> for the extra runtime root 
             var nodes = new List<RTNode>(nodeCount)
             {
                 new RTNode(0, true, new Transformation(), new Transformation(), 0) // root of the skeleton
@@ -209,7 +215,7 @@ namespace Pose.Runtime.MonoGameDotNetCore.Skeletons
                 var parentIdx = nodeIndices[node.ParentId];
 
                 var drawOrderIndex = 0;
-                if (node.Type == Node.Types.NodeType.Spritenode)
+                if (node.Type == NodeType.SpriteNode)
                     drawOrderIndex = _document.DrawOrder.NodeIds.IndexOf(node.Id);
 
                 nodes.Add(new RTNode(parentIdx,
@@ -217,7 +223,7 @@ namespace Pose.Runtime.MonoGameDotNetCore.Skeletons
                     new Transformation(node.Position.X, node.Position.Y, node.Angle),
                     new Transformation(0,0,0),
                     drawOrderIndex,
-                    node.Type == Node.Types.NodeType.Spritenode ? _spritesheet.Sprites[node.SpriteKey] : null));
+                    node.Type == NodeType.SpriteNode ? _spritesheet.Sprites[node.SpriteKey] : null));
                 nodeIndices.Add(node.Id, i + 1);
             }
 
@@ -233,6 +239,25 @@ namespace Pose.Runtime.MonoGameDotNetCore.Skeletons
             return LoadFromFiles(graphicsDevice, pathWithoutExtension + ".pose", pathWithoutExtension + ".sheet", pathWithoutExtension + ".png");
         }
 
+
+        public static SkeletonDefinition LoadFromFiles(GraphicsDevice graphicsDevice, string poseFilename, string sheetFilename, string pngFilename, List<string> extraAnimationsFilenames)
+        {
+            var document = File.ReadAllText(poseFilename).Deserialize<Document>();
+            var texture = Texture2D.FromFile(graphicsDevice, pngFilename);
+            var sheet = SpritesheetMapper.MapSpritesheet(File.ReadAllText(sheetFilename).Deserialize<Persistence.Spritesheet>());
+
+            var extraAnimations = new List<Animation>();
+            foreach (var extraAnimationFilename in extraAnimationsFilenames)
+            {
+                var extraAnimation = File.ReadAllText(extraAnimationFilename).Deserialize<Animation>();
+                extraAnimations.Add(extraAnimation);
+            }
+
+            document.Animations.AddRange(extraAnimations);
+
+            return new SkeletonDefinition(document, sheet, texture);
+        }
+
         /// <summary>
         /// The long overload to load a Pose definition from its files by giving all 3 filenames. If you used the default save behavior of the Pose editor, you may use the overload with just the name parameter.
         /// </summary>
@@ -241,9 +266,13 @@ namespace Pose.Runtime.MonoGameDotNetCore.Skeletons
         /// <param name="pngFilename">The full path of the .png file (spritesheet) to load</param>
         public static SkeletonDefinition LoadFromFiles(GraphicsDevice graphicsDevice, string poseFilename, string sheetFilename, string pngFilename)
         {
-            var document = Document.Parser.ParseFrom(File.ReadAllBytes(poseFilename));
+            //var document = Document.Parser.ParseFrom(File.ReadAllBytes(poseFilename));
+            var document = File.ReadAllText(poseFilename).Deserialize<Document>();
+
             var texture = Texture2D.FromFile(graphicsDevice, pngFilename);
-            var sheet = SpritesheetMapper.MapSpritesheet(Persistence.Spritesheet.Parser.ParseFrom(File.ReadAllBytes(sheetFilename)));
+            //var sheet = SpritesheetMapper.MapSpritesheet(Persistence.Spritesheet.Parser.ParseFrom(File.ReadAllBytes(sheetFilename)));
+            var sheet = SpritesheetMapper.MapSpritesheet(File.ReadAllText(sheetFilename).Deserialize<Persistence.Spritesheet>());
+
 
             return new SkeletonDefinition(document, sheet, texture);
         }

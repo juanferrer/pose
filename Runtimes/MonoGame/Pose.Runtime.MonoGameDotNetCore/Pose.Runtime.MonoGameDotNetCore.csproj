@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -9,7 +9,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Extensions\Extensions\Extensions.csproj" />
     <ProjectReference Include="..\..\..\Pose\Pose.Persistence\Pose.Persistence.csproj" />
+    <ProjectReference Include="..\..\..\Pose\Pose.SpritePacker\Pose.SpritePacker.csproj" />
   </ItemGroup>
 
 </Project>

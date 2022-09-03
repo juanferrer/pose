@@ -5,7 +5,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Pose.Runtime.MonoGameDotNetCore;
+using Pose.Runtime.MonoGameDotNetCore.Rendering;
 using Pose.Runtime.MonoGameDotNetCore.Skeletons;
+using SharpDX.Mathematics.Interop;
 
 namespace Pose.Runtime.MonoGame.TestGame
 {
@@ -14,6 +16,8 @@ namespace Pose.Runtime.MonoGame.TestGame
         private PoseRuntime _poseRuntime;
         private readonly GraphicsDeviceManager _graphicsDeviceManager;
         private float _cameraZoom;
+        private Texture2D _squareTexture;
+        private SpriteBatch _spriteBatch;
 
         // performance tracking
         private int frameCount = 0;
@@ -24,9 +28,8 @@ namespace Pose.Runtime.MonoGame.TestGame
         {
             _graphicsDeviceManager = new GraphicsDeviceManager(this)
             {
-                PreferredBackBufferWidth = 3000,
-                PreferredBackBufferHeight = 2000,
-                GraphicsProfile = GraphicsProfile.Reach
+                PreferredBackBufferWidth = 1920,
+                PreferredBackBufferHeight = 1080
             };
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
@@ -62,11 +65,11 @@ namespace Pose.Runtime.MonoGame.TestGame
             // var skeletonDefinition = Content.LoadPoseSkeletonDefinition("poser");
 
             // DEMO 1 -----------
-            //CreateDemo1(skeletonDefinition);
+            CreateDemo1(skeletonDefinition);
             // ----
 
             // DEMO 2 ------------------
-            CreateDemo2(skeletonDefinition); // don't forget setting UseMultiCore = true in the PoseRuntime.
+            //CreateDemo2(skeletonDefinition); // don't forget setting UseMultiCore = true in the PoseRuntime.
             // ----
             
             StartAnimations("Run"); // the animationname is the one assigned to the animation in Pose Editor
@@ -75,14 +78,22 @@ namespace Pose.Runtime.MonoGame.TestGame
         private void CreateDemo1(SkeletonDefinition skeletonDefinition)
         {
             _cameraZoom = 1f;
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            //_squareTexture = new Texture2D(GraphicsDevice, 500, 500);
+            _squareTexture = Content.Load<Texture2D>("poser");
 
             // shows four running guys with different depths to show layering of sprites.
             // the second is most in front, 1 and 3 are behind that, and 4th is furthest
-
-            _poseRuntime.Add(skeletonDefinition.CreateInstance(new Vector2(-100, 0), 1, 0));
+            // TopLeft
+            _poseRuntime.Add(skeletonDefinition.CreateInstance(new Vector2(-200, -200), 1, 45));
+            // Top Right
+            _poseRuntime.Add(skeletonDefinition.CreateInstance(new Vector2(200, -200), 1, 0));
+            // Centre
             _poseRuntime.Add(skeletonDefinition.CreateInstance(new Vector2(0, 0), 0, 0));
-            _poseRuntime.Add(skeletonDefinition.CreateInstance(new Vector2(100, 0), 1, 0));
-            _poseRuntime.Add(skeletonDefinition.CreateInstance(new Vector2(200, 0), 2, 0));
+            // BottomLeft
+            _poseRuntime.Add(skeletonDefinition.CreateInstance(new Vector2(-200, 200), 2, 0));
+            // BottomRight
+            _poseRuntime.Add(skeletonDefinition.CreateInstance(new Vector2(200, 200), 1, 0));
         }
 
         private void CreateDemo2(SkeletonDefinition skeletonDefinition)
@@ -127,9 +138,36 @@ namespace Pose.Runtime.MonoGame.TestGame
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Azure);
+            GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            _poseRuntime.SetCameraPosition(new Vector2(0, 0), _cameraZoom);
+            _spriteBatch.Begin();
+            //_spriteBatch.Draw(_squareTexture, Vector2.Zero, Color.White);
+            _spriteBatch.End();
+
+
+            //_poseRuntime.SetCameraPosition(Vector2.Zero, _cameraZoom);
+            var viewport = _graphicsDeviceManager.GraphicsDevice.Viewport;
+            var halfWidth = viewport.Width * 0.5f / _cameraZoom;
+            var halfHeight = viewport.Height * 0.5f / _cameraZoom;
+            var position = new Vector2(-halfWidth, -halfHeight);
+            /**
+            var left = -halfWidth;
+            var right = +halfWidth;
+            var bottom = -halfHeight;
+            var top = halfHeight;
+            /**/
+
+            /**/
+            var left = 0;
+            var right = viewport.Width;
+            var bottom = viewport.Height;
+            var top = 0;
+            /**/
+
+            //_poseRuntime.ProjectionTransform = Matrix.CreateOrthographicOffCenter(left, right, bottom, top, 0, 100);
+            _poseRuntime.ProjectionTransform = Matrix.CreateOrthographic(viewport.Width, viewport.Height, 0, 100);
+            _poseRuntime.ViewTransform = Matrix.CreateTranslation(position.X, -position.Y, -1f);
+
             _poseRuntime.Draw((float)gameTime.TotalGameTime.TotalSeconds);
 
             MeasurePerformance();

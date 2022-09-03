@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="Pose.Popups.ExportAnimations.ExportAnimationsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:Pose.Controls"
+             xmlns:viewport="clr-namespace:Pose.SceneEditor.Viewport"
+             xmlns:interop="clr-namespace:System.Windows.Interop;assembly=PresentationCore"
+             xmlns:exportanimations="clr-namespace:Pose.Popups.ExportAnimations" d:DataContext="{d:DesignInstance Type=exportanimations:ExportAnimationsViewModel}"
+             mc:Ignorable="d" Loaded="ExportAnimationsView_OnLoaded"
+             d:DesignHeight="300" d:DesignWidth="400">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ListView x:Name="AnimationsListView" ItemsSource="{Binding AnimationItems}" Padding="20" Background="Transparent">
+            <d:ListView.ItemsSource>
+                <x:Array Type="{x:Type exportanimations:AnimationItem}">
+                    <exportanimations:AnimationItem IsMarkedForExport="True" AnimationName="Walk_Left"/>
+                    <exportanimations:AnimationItem IsMarkedForExport="False" AnimationName="Walk_Right"/>
+                </x:Array>
+            </d:ListView.ItemsSource>
+            <ListView.ItemTemplate>
+                <DataTemplate x:Name="AnimationItemDataTemplate">
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding IsMarkedForExport, Mode=TwoWay}" Padding="12,0"/>
+                        <TextBlock Text="{Binding AnimationName}" Foreground="#eeeeee"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</UserControl>

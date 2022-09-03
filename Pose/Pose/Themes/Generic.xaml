@@ -1,4 +1,5 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
 
@@ -21,6 +22,7 @@
         <ResourceDictionary Source="pack://application:,,,/Pose;component/Themes/StandardControls/ToggleButton.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Pose;component/Themes/StandardControls/EditorModeToggleButton.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Pose;component/Themes/StandardControls/TabControl.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Pose;component/Themes/StandardControls/TextBlock.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Pose;component/Themes/StandardControls/TreeView.xaml" />
         
         <!-- Pose's custom controls -->

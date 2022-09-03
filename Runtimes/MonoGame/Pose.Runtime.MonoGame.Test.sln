@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30611.23
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pose.Runtime.MonoGame.TestGame", "Pose.Runtime.MonoGame.TestGame\Pose.Runtime.MonoGame.TestGame.csproj", "{6B3FEB9E-4D12-40D4-9859-8827A190E542}"
 EndProject
@@ -10,6 +10,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pose.Runtime.MonoGameDotNetCore", "Pose.Runtime.MonoGameDotNetCore\Pose.Runtime.MonoGameDotNetCore.csproj", "{D1975C62-367B-4009-8CD0-BC4E608896BD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pose.Common", "..\..\Pose\Pose.Common\Pose.Common.csproj", "{3AF7ABEA-0A9A-4D0D-B2DA-68F45123295E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extensions", "..\..\..\Extensions\Extensions\Extensions.csproj", "{D5E5D099-25EA-4500-9A09-9BAE083CE19F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pose.SpritePacker", "..\..\Pose\Pose.SpritePacker\Pose.SpritePacker.csproj", "{9B26BC5D-B959-42C1-A1F8-4F583BC701D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{3AF7ABEA-0A9A-4D0D-B2DA-68F45123295E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AF7ABEA-0A9A-4D0D-B2DA-68F45123295E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AF7ABEA-0A9A-4D0D-B2DA-68F45123295E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5E5D099-25EA-4500-9A09-9BAE083CE19F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5E5D099-25EA-4500-9A09-9BAE083CE19F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5E5D099-25EA-4500-9A09-9BAE083CE19F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5E5D099-25EA-4500-9A09-9BAE083CE19F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B26BC5D-B959-42C1-A1F8-4F583BC701D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B26BC5D-B959-42C1-A1F8-4F583BC701D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B26BC5D-B959-42C1-A1F8-4F583BC701D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B26BC5D-B959-42C1-A1F8-4F583BC701D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

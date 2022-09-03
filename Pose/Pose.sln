@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30320.27
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pose", "Pose\Pose.csproj", "{356AFC8C-8634-4A02-A08E-6D989F543854}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pose.Common", "Pose.Common\Pose.Common.csproj", "{ECC59224-1DB0-4C1D-8876-C3B21945D663}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pose.SpritePacker", "Pose.SpritePacker\Pose.SpritePacker.csproj", "{0AD5D77D-10FD-4197-9DBA-6D12588D77A5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extensions", "..\..\Extensions\Extensions\Extensions.csproj", "{8D6490E6-43CD-470D-9F59-9D646B2AE6DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{0AD5D77D-10FD-4197-9DBA-6D12588D77A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0AD5D77D-10FD-4197-9DBA-6D12588D77A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0AD5D77D-10FD-4197-9DBA-6D12588D77A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D6490E6-43CD-470D-9F59-9D646B2AE6DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D6490E6-43CD-470D-9F59-9D646B2AE6DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D6490E6-43CD-470D-9F59-9D646B2AE6DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D6490E6-43CD-470D-9F59-9D646B2AE6DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

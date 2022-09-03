@@ -5,7 +5,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
-    <Version>0.4.0.17</Version>
+    <Version>0.4.0.65</Version>
     <Authors>Thomas Vantroyen</Authors>
     <Company>HellHoleGames</Company>
     <Description>A 2D bone-based animation creator for game development.</Description>
@@ -142,6 +142,9 @@
     </Page>
     <Page Update="Panels\Hierarchy\HierarchyPanel.xaml">
       <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Popups\ExportAnimations\ExportAnimationsWindow.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
     <Page Update="SceneEditor\SceneEditor.xaml">
       <SubType>Designer</SubType>

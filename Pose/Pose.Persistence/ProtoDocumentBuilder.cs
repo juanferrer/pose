@@ -61,11 +61,11 @@ namespace Pose.Persistence
                 switch (domainNode)
                 {
                     case SpriteNode spriteNode:
-                        node.Type = Node.Types.NodeType.Spritenode;
+                        node.Type = NodeType.SpriteNode;
                         node.SpriteKey = spriteNode.SpriteRef.RelativePath;
                         break;
                     case BoneNode boneNode:
-                        node.Type = Node.Types.NodeType.Bonenode;
+                        node.Type = NodeType.BoneNode;
                         node.BoneLength = boneNode.GetProperty(PropertyType.BoneLength).DesignValue;
                         break;
                     default:
@@ -150,16 +150,16 @@ namespace Pose.Persistence
             };
         }
 
-        private static Key.Types.InterpolationTypeEnum GetCurveType(CurveType type)
+        private static InterpolationType GetCurveType(CurveType type)
         {
             switch (type)
             {
                 case CurveType.Linear:
-                    return Key.Types.InterpolationTypeEnum.Linear;
+                    return InterpolationType.Linear;
                 case CurveType.Bezier:
-                    return Key.Types.InterpolationTypeEnum.Bezier;
+                    return InterpolationType.Bezier;
                 case CurveType.Hold:
-                    return Key.Types.InterpolationTypeEnum.Hold;
+                    return InterpolationType.Hold;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }

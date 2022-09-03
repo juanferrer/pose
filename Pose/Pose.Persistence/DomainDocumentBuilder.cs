@@ -51,8 +51,8 @@ namespace Pose.Persistence
             {
                 var domainNode = node.Type switch
                 {
-                    Node.Types.NodeType.Spritenode => BuildSpriteNode(data, node),
-                    Node.Types.NodeType.Bonenode => BuildBoneNode(data, node),
+                    NodeType.SpriteNode => BuildSpriteNode(data, node),
+                    NodeType.BoneNode => BuildBoneNode(data, node),
                     _ => throw new NotSupportedException("Unknown Node type: " + node.Type)
                 };
                 data.Nodes.Add(domainNode);
@@ -152,15 +152,15 @@ namespace Pose.Persistence
             }
         }
 
-        private static InterpolationData MapInterpolationData(Key.Types.InterpolationTypeEnum type, BezierCurve curve)
+        private static InterpolationData MapInterpolationData(InterpolationType type, BezierCurve curve)
         {
             switch (type)
             {
-                case Key.Types.InterpolationTypeEnum.Bezier:
+                case InterpolationType.Bezier:
                     return new InterpolationData(CurveType.Bezier, new Common.Curves.BezierCurve(MapPoint(curve.P0), MapPoint(curve.P1), MapPoint(curve.P2), MapPoint(curve.P3)));
-                case Key.Types.InterpolationTypeEnum.Hold:
+                case InterpolationType.Hold:
                     return new InterpolationData(CurveType.Hold);
-                case Key.Types.InterpolationTypeEnum.Linear:
+                case InterpolationType.Linear:
                     return new InterpolationData(CurveType.Linear);
                 default:
                     throw new NotSupportedException($"Unknown interpolation type [{type}] found in file.");
