@@ -71,7 +71,7 @@ namespace Pose.Runtime.MonoGameDotNetCore.Skeletons
                     }
                 }
 
-                var rtAnimation = new RTAnimation(duration, animation.IsLoop, rtPropertyAnimations.ToArray());
+                var rtAnimation = new RTAnimation(animation.Name, duration, animation.IsLoop, rtPropertyAnimations.ToArray());
                 animations.Add(animation.Name, rtAnimation);
             }
 

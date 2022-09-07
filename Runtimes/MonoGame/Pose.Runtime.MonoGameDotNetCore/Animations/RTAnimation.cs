@@ -2,17 +2,19 @@
 {
     public class RTAnimation
     {
+        public string Name { get; }
+        public bool IsLoop { get; }
+        public float Duration { get; } // length of animation in sec
         private float? _startGameTime; // animation was started on this gametime.
-        private readonly bool _isLoop;
-        private readonly float _duration; // length of animation in sec
         private readonly RTPropertyAnimation[] _propertyAnimations;
 
         /// <param name="duration">Duration of animation in seconds</param>
         /// <param name="isLoop">Loop or stop at end of animation</param>
-        internal RTAnimation(float duration, bool isLoop, RTPropertyAnimation[] propertyAnimations)
+        internal RTAnimation(string name, float duration, bool isLoop, RTPropertyAnimation[] propertyAnimations)
         {
-            _duration = duration;
-            _isLoop = isLoop;
+            Name = name;
+            Duration = duration;
+            IsLoop = isLoop;
             _propertyAnimations = propertyAnimations;
         }
 
@@ -38,8 +40,8 @@
                 return;
 
             var t = gameTime - _startGameTime.Value;
-            if (_isLoop)
-                t %= _duration;
+            if (IsLoop)
+                t %= Duration;
 
             for (var i = 0; i < _propertyAnimations.Length; i++)
             {

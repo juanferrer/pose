@@ -12,7 +12,6 @@ namespace Pose.Runtime.MonoGameDotNetCore.Skeletons
     {
         private readonly RTNode[] _nodes;
         private readonly int[] _drawSequenceIndices;
-        private readonly Dictionary<string, RTAnimation> _animations;
         private readonly SpriteMesh _mesh;
 
         /// <param name="nodes">all nodes of the hierarchy, in hierarchic order, for updating transforms</param>
@@ -21,7 +20,7 @@ namespace Pose.Runtime.MonoGameDotNetCore.Skeletons
         {
             _nodes = nodes;
             _drawSequenceIndices = drawSequenceIndices;
-            _animations = animations ?? throw new ArgumentNullException(nameof(animations));
+            Animations = animations ?? throw new ArgumentNullException(nameof(animations));
             _mesh = new SpriteMesh(drawSequenceIndices.Select(idx => nodes[idx].Sprite), texture, BufferMode.Unbuffered);
         }
 
@@ -42,7 +41,7 @@ namespace Pose.Runtime.MonoGameDotNetCore.Skeletons
         /// <param name="startTimeSeconds">The starttime of the animation (first frame) in seconds. Often this will be the gametime of the current frame, but you can use this to offset the animation's time position.</param>
         public void StartAnimation(string name, float startTimeSeconds)
         {
-            if (!_animations.TryGetValue(name, out var animation))
+            if (!Animations.TryGetValue(name, out var animation))
                 throw new PoseAnimationNotFoundException($"Animation \"{name}\" not found.");
             CurrentAnimation = animation;
             CurrentAnimation.Start(startTimeSeconds);
@@ -114,5 +113,7 @@ namespace Pose.Runtime.MonoGameDotNetCore.Skeletons
         public float Depth { get; set; }
 
         public RTAnimation CurrentAnimation { get; private set; }
+
+        public Dictionary<string, RTAnimation> Animations { get; }
     }
 }
